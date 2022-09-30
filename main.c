@@ -1,23 +1,16 @@
-/*
- À­ÒÀ´ï×¼Ôò
- Éè¶Ô±»²âÁ¿½øĞĞµÈ¾«¶È²âÁ¿£¬¶ÀÁ¢µÃµ½x1£¬x2...xn£¬Ëã³öÆäËãÊõÆ½¾ùÖµx¼°Ê£ÓàÎó²îvi=xi-x£¨i=1,2£¬...,n£©£¬²¢°´±´Èû¶û¹«Ê½Ëã³ö±ê×¼Æ«²î¦Ò£¬ÈôÄ³¸ö²âÁ¿ÖµxbµÄÊ£ÓàÎó²îvb£¨1<=b<=n£©£¬Âú×ãÏÂÊ½
- |vb|=|xb-x|>3¦Ò£¬ÔòÈÏÎªxbÊÇº¬ÓĞ´Ö´óÎó²îÖµµÄ»µÖµ£¬Ó¦ÓèÌŞ³ı¡£
- ±´Èû¶û¹«Ê½
- Ê£ÓàÎó²îµÄÆ½·½ºÍ³ıÒÔn-1µÄ²î£¬ÔÙÇóÆäÆ½·½¸ù£¬½á¹û¾ÍÊÇ±ê×¼Æ«²î*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-#define LENGTH 1000  // Ò»¹²ÓĞ1000¸öÊı
+#define LENGTH 1000  // ä¸€å…±æœ‰1000ä¸ªæ•°
 
-// ¼ÆËãÆ½¾ùÖµ
+// è®¡ç®—å¹³å‡å€¼
 double getAverage(const double num_arr[]) {
     double sum = 0;
     int n = 0;
     for (int i = 0; i < LENGTH; i++) {
-        if (isnan(num_arr[i])) {  // Èç¹ûÊÇNAN
+        if (isnan(num_arr[i])) {  // å¦‚æœæ˜¯NAN
             n++;
         } else {
             sum += num_arr[i];
@@ -26,41 +19,41 @@ double getAverage(const double num_arr[]) {
     return sum / (LENGTH - n);
 }
 
-// ¼ÆËãÊ£ÓàÎó²î
+// è®¡ç®—å‰©ä½™è¯¯å·®
 void getResidualError(const double num_arr[], double residual_error_arr[], double average) {
     for (int i = 0; i < LENGTH; i++) {
         residual_error_arr[i] = num_arr[i] - average;
     }
 }
 
-// ¼ÆËã±ê×¼Æ«²î
+// è®¡ç®—æ ‡å‡†åå·®
 double getStandardDeviation(double residual_error_arr[]) {
-    // ÇóÊ£ÓàÎó²îµÄÆ½·½ºÍ
+    // æ±‚å‰©ä½™è¯¯å·®çš„å¹³æ–¹å’Œ
     double sum = 0;
     for (int i = 0; i < LENGTH; i++) {
-        sum += pow(residual_error_arr[i], 2);  // pow(x, y)º¯Êı¼ÆËãxµÄy´Î·½
+        sum += pow(residual_error_arr[i], 2);  // pow(x, y)å‡½æ•°è®¡ç®—xçš„yæ¬¡æ–¹
     }
-    return sqrt(sum / (LENGTH - 1));  // sqrt()º¯ÊıÇóÆ½·½¸ù
+    return sqrt(sum / (LENGTH - 1));  // sqrt()å‡½æ•°æ±‚å¹³æ–¹æ ¹
 }
 
-// ²éÕÒ´Ö´óÎó²î
+// æŸ¥æ‰¾ç²—å¤§è¯¯å·®
 void getGrossError(double num_arr[], double residual_error_arr[], double standard_deviation) {
-    printf("ÒªÈ¥³ıµÄÊı¾İÎª£º");
+    printf("è¦å»é™¤çš„æ•°æ®ä¸ºï¼š");
     for (int i = 0; i < LENGTH; i++) {
-        if (fabs(residual_error_arr[i]) > standard_deviation * 3) {  // fabs()Çó¸¡µãÊıµÄ¾ø¶ÔÖµ£»Âú×ã´ËÌõ¼şµÄ¾ÍÊÇ´Ö´óÎó²î
-            printf("%g, ", num_arr[i]);  // %g²»Êä³ö¸¡µãÊıºóÃæµÄ0
-            num_arr[i] = NAN;  // ½«´ËÖµ±äÎªNAN
+        if (fabs(residual_error_arr[i]) > standard_deviation * 3) {  // fabs()æ±‚æµ®ç‚¹æ•°çš„ç»å¯¹å€¼ï¼›æ»¡è¶³æ­¤æ¡ä»¶çš„å°±æ˜¯ç²—å¤§è¯¯å·®
+            printf("%g, ", num_arr[i]);  // %gä¸è¾“å‡ºæµ®ç‚¹æ•°åé¢çš„0
+            num_arr[i] = NAN;  // å°†æ­¤å€¼å˜ä¸ºNAN
         }
     }
     printf("\n");
 }
 
-// ¼ÆËã·½²î
+// è®¡ç®—æ–¹å·®
 double getVariance(double num_arr[], double average) {
     double sum = 0;
     int n = 0;
     for (int i = 0; i < LENGTH; i++) {
-        if (isnan(num_arr[i])) {  // Èç¹ûÊÇNAN
+        if (isnan(num_arr[i])) {  // å¦‚æœæ˜¯NAN
             n++;
         } else {
             sum += pow(num_arr[i] - average, 2);
@@ -70,51 +63,51 @@ double getVariance(double num_arr[], double average) {
 }
 
 int main() {
-    FILE *fp = fopen("thick-error_data.txt", "r");  // ´ò¿ªÎÄ¼ş²¢ÇÒÈÃfpÖ¸ÏòÎÄ¼ş
+    FILE *fp = fopen("thick-error_data.txt", "r");  // æ‰“å¼€æ–‡ä»¶å¹¶ä¸”è®©fpæŒ‡å‘æ–‡ä»¶
     if (fp == NULL) {
-        fprintf(stderr, "ÎÄ¼ş´ò¿ªÊ§°Ü.\n");
+        fprintf(stderr, "æ–‡ä»¶æ‰“å¼€å¤±è´¥.\n");
         exit(EXIT_FAILURE);
     }
     char row[10000];
     double num_arr[LENGTH] = {};
-    while (fgets(row, 10000, fp) != NULL) {  // Ã¿´Î´Ófp¶ÁÈ¡¶àÉÙ¸öµ½±äÁ¿row
+    while (fgets(row, 10000, fp) != NULL) {  // æ¯æ¬¡ä»fpè¯»å–å¤šå°‘ä¸ªåˆ°å˜é‡row
         printf("%s", row);
         printf("\n==========\n");
 
-        char *num_str = strtok(row, "\t");  // µÚÒ»´ÎÇĞ¸î×Ö·û´®´«Èë×Ö·û´®£»´ËÎÄ¼ş·Ö¸ô·ûÎª\t£»numÖ¸ÕëÖ¸ÏòÆä·µ»ØÖµ£¬´æ·ÅÔÚ³£Á¿´æ´¢Çø£¬Í¨¹ıÖ¸ÕëÖ»¿ÉÒÔ·ÃÎÊ×Ö·û´®³£Á¿£¬¶ø²»¿ÉÒÔ¸Ä±äËü
+        char *num_str = strtok(row, "\t");  // ç¬¬ä¸€æ¬¡åˆ‡å‰²å­—ç¬¦ä¸²ä¼ å…¥å­—ç¬¦ä¸²ï¼›æ­¤æ–‡ä»¶åˆ†éš”ç¬¦ä¸º\tï¼›numæŒ‡é’ˆæŒ‡å‘å…¶è¿”å›å€¼ï¼Œå­˜æ”¾åœ¨å¸¸é‡å­˜å‚¨åŒºï¼Œé€šè¿‡æŒ‡é’ˆåªå¯ä»¥è®¿é—®å­—ç¬¦ä¸²å¸¸é‡ï¼Œè€Œä¸å¯ä»¥æ”¹å˜å®ƒ
         double num;
         int n = 0;
         while (num_str) {
-            num = atof(num_str);  // ½«×Ö·û´®×ª»»ÎªdoubleÀàĞÍ
-            num_arr[n] = num;  // ÁĞ±íÌí¼ÓÊı¾İ
+            num = atof(num_str);  // å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºdoubleç±»å‹
+            num_arr[n] = num;  // åˆ—è¡¨æ·»åŠ æ•°æ®
             n++;
-            num_str = strtok(NULL, "\t");  // Ö®ºóÇĞ¸î×Ö·û´®´«ÈëNULL
+            num_str = strtok(NULL, "\t");  // ä¹‹ååˆ‡å‰²å­—ç¬¦ä¸²ä¼ å…¥NULL
         }
     }
     fclose(fp);
 
-    // Æ½¾ùÖµ
+    // å¹³å‡å€¼
     double average = getAverage(num_arr);
-    printf("Æ½¾ùÖµ£º%lf\n", average);
+    printf("å¹³å‡å€¼ï¼š%lf\n", average);
 
-    // Ê£ÓàÎó²î
+    // å‰©ä½™è¯¯å·®
     double residual_error_arr[LENGTH] = {};
     getResidualError(num_arr, residual_error_arr, average);
 
-    // ±ê×¼Æ«²î
+    // æ ‡å‡†åå·®
     double standard_deviation = getStandardDeviation(residual_error_arr);
-    printf("±ê×¼Æ«²î£º%lf\n", standard_deviation);
+    printf("æ ‡å‡†åå·®ï¼š%lf\n", standard_deviation);
 
-    // ´Ö´óÎó²î
+    // ç²—å¤§è¯¯å·®
     getGrossError(num_arr, residual_error_arr, standard_deviation);
 
-    // ÓÃ´¦ÀíºóµÄÊı¾İ¼ÆËã¾ùÖµ
+    // ç”¨å¤„ç†åçš„æ•°æ®è®¡ç®—å‡å€¼
     double new_average = getAverage(num_arr);
-    printf("´¦ÀíºóµÄÆ½¾ùÖµ£º%lf\n", new_average);
+    printf("å¤„ç†åçš„å¹³å‡å€¼ï¼š%lf\n", new_average);
 
-    // ·½²î
+    // æ–¹å·®
     double variance = getVariance(num_arr, new_average);
-    printf("·½²î£º%lf\n", variance);
+    printf("æ–¹å·®ï¼š%lf\n", variance);
 
     return 0;
 }
